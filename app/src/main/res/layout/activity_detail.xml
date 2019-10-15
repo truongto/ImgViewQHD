@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailActivity">
+
+    <include layout="@layout/download_img" />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        app:menu_animationDelayPerItem="55"
+        app:menu_colorNormal="#FF6600"
+        app:menu_fab_size="normal"
+        app:menu_labels_colorNormal="#EEEEEE"
+        app:menu_labels_cornerRadius="3dp"
+        app:menu_labels_textColor="#FF6600">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fbtnLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_like"
+            app:fab_colorNormal="#006600"
+            app:fab_label="Favourite"
+            app:fab_size="normal" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fbtnShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_share"
+            app:fab_colorNormal="#006600"
+            app:fab_label="Share"
+            app:fab_size="normal" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fbtnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_save"
+            app:fab_colorNormal="#006600"
+            app:fab_label="Save Image"
+            app:fab_size="normal" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fbtnSetAs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_bg"
+            app:fab_colorNormal="#006600"
+            app:fab_label="Set As Wallpaper"
+            app:fab_size="normal" />
+    </com.github.clans.fab.FloatingActionMenu>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

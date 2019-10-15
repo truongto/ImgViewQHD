@@ -1,6 +1,7 @@
 package com.example.imgviewqhd;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+import com.example.imgviewqhd.interfaceOnClick.OnClickListener;
 import com.example.imgviewqhd.model.Photo;
 
 import java.util.List;
@@ -17,10 +20,15 @@ import java.util.List;
 public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.Holder> {
     List<Photo> photoList;
     Context context;
+    private OnClickListener onClickListener;
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
     public ImgAdapter(Context context, List<Photo> imgList) {
-        this.context=context;
-      this.photoList=imgList;
+        this.context = context;
+        this.photoList = imgList;
     }
 
 
@@ -32,10 +40,16 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.Holder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ImgAdapter.Holder holder, int position) {
+    public void onBindViewHolder(@NonNull ImgAdapter.Holder holder, final int position) {
         Photo photo = photoList.get(position);
-        Glide.with(context).load(photo.getUrlS()).into(holder.imageView)
-                ;
+        Glide.with(context).load(photo.getUrlZ()).into(holder.imageView);
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickListener.onClickListener(photoList.get(position));
+
+            }
+        });
     }
 
     @Override
@@ -45,9 +59,10 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.Holder> {
 
     public class Holder extends RecyclerView.ViewHolder {
         ImageView imageView;
+
         public Holder(@NonNull View itemView) {
             super(itemView);
-            imageView=itemView.findViewById(R.id.imgadapter);
+            imageView = itemView.findViewById(R.id.imgadapter);
         }
     }
 }

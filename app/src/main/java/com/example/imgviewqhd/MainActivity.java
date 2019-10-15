@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.renderscript.RenderScript;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.ParsedRequestListener;
+import com.example.imgviewqhd.interfaceOnClick.OnClickListener;
 import com.example.imgviewqhd.model.Filckr;
 import com.example.imgviewqhd.model.Photo;
 
@@ -30,9 +33,10 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Photo> imgList;
     ImgAdapter imgAdapter;
-    int page = 1;
+    private int page = 1;
     SwipeRefreshLayout swipeRefreshLayout;
-
+//    private GridLayoutManager gridLayoutManager;
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recy);
         imgList = new ArrayList<>();
         imgAdapter = new ImgAdapter(this, imgList);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL);
         recyclerView.setAdapter(imgAdapter);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
         loadImg(page);
+
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -56,14 +61,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        recyclerView.addOnScrollListener(new RecyclerViewScrolling(gridLayoutManager) {
+        recyclerView.addOnScrollListener(new RecyclerViewScrolling(staggeredGridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 MainActivity.this.page++;
                 loadImg(MainActivity.this.page++);
             }
         });
+       imgAdapter.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClickListener(Photo photo) {
+               Intent intent=new Intent(MainActivity.this,DetailActivity.class);
+               intent.putExtra("img",photo.getUrlC());
+               startActivity(intent);
+           }
+       });
     }
 
 
